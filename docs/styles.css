@@ -1,315 +1,86 @@
-/* Reset & Base */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const buttons = document.querySelectorAll(".collapsible");
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #fffdf8;
-  color: #333;
-  line-height: 1.6;
-}
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const content = this.nextElementSibling;
 
-h1, h2, h3 {
-  color: #1e3a3a;
-}
+      // Collapse other sections if needed
+      document.querySelectorAll(".content").forEach((el) => {
+        if (el !== content) {
+          el.style.maxHeight = null;
+          el.classList.remove("expanded");
+        }
+      });
 
-.section {
-    padding: 60px 20px;
-}
+      // Toggle selected section
+      if (content.classList.contains("expanded")) {
+        content.style.maxHeight = null;
+        content.classList.remove("expanded");
+      } else {
+        content.classList.add("expanded");
+        // Add 32px to scrollHeight to cover vertical padding (1rem top + 1rem bottom)
+        content.style.maxHeight = (content.scrollHeight + 32) + "px";
+      }
+    });
+  });
+});
 
-/* Hero Section */
-.hero {
-  position: relative;
-  height: 100vh;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-image: url('images/hero-bg.png');
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-}
+(function() {
+  const statusEl = document.getElementById('open-status');
+  if (!statusEl) return;
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* 50% black */
-  z-index: 1;
-}
+  // Open hours for each day (0 = Sunday, 6 = Saturday)
+  const hours = {
+    0: [12, 20], // Sunday 12pm-8pm
+    1: [14, 20], // Monday 2pm-8pm
+    2: [14, 20], // Tuesday 2pm-8pm
+    3: [14, 20], // Wednesday 2pm-8pm
+    4: [14, 20], // Thursday 2pm-8pm
+    5: [14, 20], // Friday 2pm-8pm
+    6: [12, 20], // Saturday 12pm-8pm
+  };
 
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 0 2rem;
-}
+  function formatTime(h, m = 0) {
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const hour12 = h % 12 === 0 ? 12 : h % 12;
+    const minuteStr = m < 10 ? '0' + m : m;
+    return `${hour12}:${minuteStr} ${ampm}`;
+  }
 
-.cta-button {
-  background-color: #ff6347;
-  padding: 0.75rem 1.5rem;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 1rem;
-  display: inline-block;
-  transition: background 0.3s ease;
-}
+  const [openHour, closeHour] = hours[day];
+  const todayHours = `${formatTime(openHour)} - ${formatTime(closeHour)}`;
 
-.cta-button:hover {
-  background-color: #ff4500;
-}
+  const isOpen = (hour > openHour && hour < closeHour) || (hour === openHour && minute >= 0) || (hour === closeHour && minute === 0);
 
-.hero-content h1 {
-   font-size: 3.5rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-  color: #fff;
-  text-shadow:
-    2px 2px 8px rgba(0, 0, 0, 0.8),
-    0 0 10px rgba(255, 100, 50, 0.7);
-}
+  function getNextOpen() {
+    for (let i = 1; i <= 7; i++) {
+      const nextDay = (day + i) % 7;
+      const nextHours = hours[nextDay];
+      if (nextHours) {
+        const [nextOpenHour] = nextHours;
+        const date = new Date(now);
+        date.setDate(now.getDate() + i);
+        const options = { weekday: 'long' };
+        const dayName = date.toLocaleDateString(undefined, options);
+        return `Opens ${dayName} at ${formatTime(nextOpenHour)}`;
+      }
+    }
+    return '';
+  }
 
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-}
-
-.hero-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.favorites-bg {
-  position: relative;
-  overflow: hidden;
-  color: white;
-  padding: 60px 20px;
-  z-index: 0;
-}
-
-/* Background image with blur and tint */
-.favorites-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
-  background-size: cover;
-  background-position: center;
-  filter: blur(6px) brightness(0.5);
-  z-index: -2;
-  transition: filter 0.3s ease;
-}
-
-/* Warm sunny tint overlay */
-.favorites-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(255, 200, 50, 0.3);
-  z-index: -1;
-}
-
-/* Keep content above overlays */
-.favorites-bg > * {
-  position: relative;
-  z-index: 1;
-}
-
-
-.ohana-bg {
-  position: relative;
-  overflow: hidden;
-  color: white;
-  padding: 60px 20px;
-  z-index: 0;
-}
-
-.ohana-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('images/rainbow.png'); /* Replace with your image path */
-  background-size: cover;
-  background-position: center;
-  opacity: 0.4;
-  z-index: -2;
-}
-
-.ohana-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.2); /* or a warm overlay tint */
-  z-index: -1;
-}
-
-.ohana-bg > * {
-  position: relative;
-  z-index: 1;
-}
-
-
-
-
-
-.btn {
-  background: linear-gradient(to right, #ffe066, #ffae42);
-  color: #4b2e00;
-  padding: 12px 24px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: inline-block;
-}
-
-.btn:hover {
-  background: linear-gradient(to right, #ffd43b, #ffa600);
-  color: white;
-  box-shadow: 0 0 20px rgba(255, 173, 51, 0.6);
-  transform: translateY(-2px) scale(1.03);
-}
-
-.btn-outline {
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
-}
-
-/* Sections */
-.section {
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.section.alt {
-  background-color: #f0f9ff;
-}
-
-/* Cards */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-  padding: 0 20px;
-}
-
-.card {
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-.card img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-}
-
-.card h3 {
-  padding: 10px;
-}
-
-/* Menu */
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-  padding: 0 20px;
-  text-align: left;
-}
-
-.menu-category {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.menu-category ul {
-  margin-top: 10px;
-  padding-left: 20px;
-}
-
-/* About */
-.about-text {
-  max-width: 700px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  text-align: center;
-}
-
-/* Menu Section */
-#menu {
-  background-color: #fff5e1; /* Tropical Cream */
-}
-
-/* Gallery Section */
-.section.gallery-section {
-  background: linear-gradient(to bottom, #f0fcff, #48cae4);
-  color: #003845;
-  padding: 60px 20px;
-  min-height: 400px;
-}
-
-/* Gallery */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px 0;
-}
-
-.gallery-grid img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-/* Map */
-.map-container {
-  margin-top: 20px;
-  max-width: 800px;
-  margin-inline: auto;
-}
-
-.map-container iframe {
-  width: 100%;
-  height: 300px;
-  border: 0;
-  border-radius: 10px;
-}
-
-/* Footer */
-.footer {
-  background-color: #e0f7fa;
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
-  color: #555;
-}
+  if (isOpen) {
+    statusEl.innerHTML = `<strong>We're Open!</strong><br>${todayHours}`;
+    statusEl.style.backgroundColor = 'rgba(255, 182, 193, 0.9)';
+    statusEl.style.color = '#4b2e00';
+  } else {
+    statusEl.innerHTML = `<strong>We're Closed!</strong><br>${getNextOpen()}`;
+    statusEl.style.backgroundColor = 'rgba(200, 200, 200, 0.8)';
+    statusEl.style.color = '#555';
+  }
+})();
