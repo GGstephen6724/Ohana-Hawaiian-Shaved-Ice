@@ -5,63 +5,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ohana Hawaiian Shaved Ice II</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
 </head>
 <body>
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-bg"></div>  <!--Backgorund Image Div-->
-    <div class="hero-overlay"></div>  <!-- Overlay-->
-    <div class="hero-content">
-      <h1>Cool Down with Ohana Hawaiian Shaved Ice</h1>
-      <p>Bright flavors. Big smiles. Island vibes.</p>
-      <div class="hero-buttons">
-        <a href="#menu" class="btn">View Menu</a>
-        <a href="#location" class="btn btn-outline">Find Us</a>
-      </div>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Ohana Hawaiian Shaved Ice</h1>
+    <p>Bright flavors. Big smiles. Island vibes.</p>
+    <div class="hero-buttons">
+      <a href="#menu" class="btn">View Menu</a>
+      <a href="#location" class="btn btn-outline">Find Us</a>
     </div>
-  </section>
+    <div id="open-status" class="open-status"></div> <!-- Moved outside hero-buttons -->
+  </div>
+</section>
 
   <!-- Signature Items with blurred tinted background -->
   <section class="section favorites-bg">
     <h2>Customer Favorites</h2>
     <div class="card-grid">
-      <div class="card"><img src="items/item1.jpg" alt="Rainbow Ice" /><h3>Rainbow Ice</h3></div>
-      <div class="card"><img src="items/item2.jpg" alt="Tropical Fruit Bowl" /><h3>Tropical Fruit Bowl</h3></div>
-      <div class="card"><img src="items/item3.jpg" alt="Ice Cream Float" /><h3>Ice Cream Float</h3></div>
-      <div class="card"><img src="items/item4.jpg" alt="Lava Flow Smoothie" /><h3>Lava Flow Smoothie</h3></div>
+      <div class="card"><img src="images/item1.png" alt="Double Rainbow Ice" /><h3>Double Rainbow Ice</h3></div>
+      <div class="card"><img src="images/item2.png" alt="Dragon Fruit Bowl" /><h3>Dragon Fruit Bowl</h3></div>
+      <div class="card"><img src="images/item5.png" alt="Strawberry Cream" /><h3>Strawberry & Sweet Cream Ice</h3></div>
+      <div class="card"><img src="images/item6.png" alt="Texas Leche" /><h3>Texas Leche Ice</h3></div>
     </div>
   </section>
 
-  <!-- Menu Preview -->
-  <section id="menu" class="section alt">
-    <h2>Our Menu</h2>
-    <div class="menu-grid">
-      <div class="menu-category">
-        <h3>Shaved Ice</h3>
-        <ul>
-          <li>Classic Rainbow</li>
-          <li>Mango Madness</li>
-          <li>Blue Hawaii</li>
-        </ul>
-      </div>
-      <div class="menu-category">
-        <h3>Smoothies</h3>
-        <ul>
-          <li>Pineapple Paradise</li>
-          <li>Strawberry Sunset</li>
-          <li>Island Green</li>
-        </ul>
-      </div>
-      <div class="menu-category">
-        <h3>Snacks</h3>
-        <ul>
-          <li>Soft Pretzels</li>
-          <li>Fruit Bowls</li>
-          <li>Ice Cream Cones</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <section id="menu" class="section">
+  <h2>Our Menu</h2>
+
+<!-- Shaved Ice -->
+<button class="collapsible">Shaved Ice</button>
+<div class="content">
+  <p style="margin-top: 1rem;"><strong>Toppings:</strong></p>
+  <ul class="flavor-list">
+    <li>Fruit Boba</li>
+    <li>Airheads</li>
+    <li>Caramel</li>
+    <li>Chamoy</li>
+    <li>Chocolate Drizzle</li>
+    <li>Cinnamon</li>
+    <li>Coconut Flakes</li>
+    <li>Fruit</li>
+    <li>Gummies</li>
+    <li>Ice Cream</li>
+    <li>Kool-Aid Powder</li>
+    <li>Lemon Powder</li>
+    <li>Lime Juice</li>
+    <li>M&Ms</li>
+    <li>Mango Popping Boba</li>
+    <li>Marshmallow Cream</li>
+    <li>Nerds</li>
+    <li>Oreos</li>
+    <li>Peanuts</li>
+    <li>Pickles</li>
+    <li>Skittles</li>
+    <li>Sour Straws</li>
+    <li>Sprinkles</li>
+    <li>Sweetened Condensed Milk</li>
+    <li>Takis</li>
+    <li>Tamarindo Sticks</li>
+    <li>Chili Powder</li>
+    <li>Whipped Cream</li>
+    <li>White Chocolate Drizzle</li>
+  </ul>
+</div>
+
+<!-- Ice Cream -->
+<button class="collapsible">Ice Cream</button>
+<div class="content">
+  <div class="menu-item">
+    <p><strong>Waffle Cone:</strong> $6.65</p>
+    <p><strong>Cake Cone:</strong> $4.85</p>
+    <p><strong>Sugar Cone:</strong> $4.56</p>
+    <p><strong>Small Cup:</strong> $5.11</p>
+    <p><em>Includes 2 scoops – additional scoops extra</em></p>
+  </div>
+  <p style="margin-top: 1rem;"><strong>Flavors:</strong></p>
+  <ul class="flavor-list">
+    <li>Butter Pecan</li>
+    <li>Coffee</li>
+    <li>Chocolate</li>
+    <li>Cookies and Cream</li>
+    <li>Rainbow Sherbet</li>
+    <li>Strawberry</li>
+    <li>Strawberry Cheesecake</li>
+    <li>Vanilla</li>
+  </ul>
+</div>
+
+<!-- Smoothies -->
+<button class="collapsible">Smoothies</button>
+<div class="content">
+  <div class="menu-item">
+    <p><strong>Medium:</strong> $7.95</p>
+    <p><strong>Large:</strong> $12.95</p>
+    <p><em>Add protein: Chocolate or Vanilla (additional charge)</em></p>
+  </div>
+  <p style="margin-top: 1rem;"><strong>Flavors:</strong></p>
+  <ul class="flavor-list">
+    <li>Banana & Peanut Butter</li>
+    <li>Green Monster</li>
+    <li>Island Breeze</li>
+    <li>Very Berry</li>
+    <li>...more coming soon</li>
+  </ul>
+</div>
+
+<!-- Acai & Dragon Fruit Bowls -->
+<button class="collapsible">Açaí & Dragon Fruit Bowls</button>
+<div class="content">
+  <p><strong>Açaí Bowl:</strong></p>
+  <p>Granola, strawberries, bananas, blueberries, coconut flakes, and honey</p>
+  <p style="margin-top: 1rem;"><strong>Dragon Fruit Bowl:</strong></p>
+  <p>Granola, pineapple, strawberries, blueberries</p>
+</div>
+</section>
 
 <!-- About Section -->
 <section class="section ohana-bg">
@@ -87,19 +150,22 @@
     </div>
   </section>
 
-  <!-- Location -->
-  <section id="location" class="section">
-    <h2>Visit Us</h2>
-    <p>123 Beachside Blvd, Fort Myers, FL</p>
-    <p>Open Daily: 11am - 9pm</p>
-    <div class="map-container">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18..." loading="lazy" allowfullscreen></iframe>
-    </div>
-  </section>
-
+<!-- Location -->
+<section id="location" class="section">
+  <h2>Visit Us</h2>
+  <p>4206 Cleveland Ave, Fort Myers, FL, 33901</p>
+  <p>Open Daily: 11am - 9pm</p>
+  <p>
+    Need directions?&nbsp; <br>
+    <a href="https://www.google.com/maps/search/?api=1&query=123+Beachside+Blvd,+Fort+Myers,+FL" target="_blank" rel="noopener noreferrer">Google Maps</a> |
+    <a href="http://maps.apple.com/?address=123%20Beachside%20Blvd,%20Fort%20Myers,%20FL" target="_blank" rel="noopener noreferrer">Apple Maps</a>
+  </p>
+</section>
   <!-- Footer -->
   <footer class="footer">
     &copy; 2025 Ohana Hawaiian Shaved Ice II, Inc. All rights reserved.
   </footer>
+
+  <script src="scripts.js"></script>
 </body>
 </html>
