@@ -35,7 +35,7 @@ h1, h2, h3 {
 .hero-bg {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background-image: url('images/new-hero-bg.png');
+  background-image: url('./images/new-hero-bg.png');
   background-size: cover;
   background-position: center;
   z-index: 0;
@@ -165,7 +165,7 @@ h1, h2, h3 {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('images/rainbow.png'); /* Replace with your image path */
+  background-image: url('images/rainbow.png');
   background-size: cover;
   background-position: center;
   opacity: 0.4;
@@ -607,4 +607,5 @@ button, a.btn, .card, .collapsible {
     transition-duration: 0.01ms !important;
   }
 }
+
 
