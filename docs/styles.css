@@ -1,86 +1,610 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const buttons = document.querySelectorAll(".collapsible");
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const content = this.nextElementSibling;
+body {
+  font-family: 'Fredoka', sans-serif;
+  background: #fffdf8;
+  color: #333;
+  line-height: 1.6;
+}
 
-      // Collapse other sections if needed
-      document.querySelectorAll(".content").forEach((el) => {
-        if (el !== content) {
-          el.style.maxHeight = null;
-          el.classList.remove("expanded");
-        }
-      });
+h1, h2, h3 {
+  color: #1e3a3a;
+    font-family: 'Fredoka', sans-serif;
+}
 
-      // Toggle selected section
-      if (content.classList.contains("expanded")) {
-        content.style.maxHeight = null;
-        content.classList.remove("expanded");
-      } else {
-        content.classList.add("expanded");
-        // Add 32px to scrollHeight to cover vertical padding (1rem top + 1rem bottom)
-        content.style.maxHeight = (content.scrollHeight + 32) + "px";
-      }
-    });
-  });
-});
+.section {
+  padding: 60px 20px;
+}
 
-(function() {
-  const statusEl = document.getElementById('open-status');
-  if (!statusEl) return;
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url('images/new-hero-bg.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
 
-  // Open hours for each day (0 = Sunday, 6 = Saturday)
-  const hours = {
-    0: [12, 20], // Sunday 12pm-8pm
-    1: [14, 20], // Monday 2pm-8pm
-    2: [14, 20], // Tuesday 2pm-8pm
-    3: [14, 20], // Wednesday 2pm-8pm
-    4: [14, 20], // Thursday 2pm-8pm
-    5: [14, 20], // Friday 2pm-8pm
-    6: [12, 20], // Saturday 12pm-8pm
-  };
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 50% black */
+  z-index: 1;
+}
 
-  const now = new Date();
-  const day = now.getDay();
-  const hour = now.getHours();
-  const minute = now.getMinutes();
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem;
+}
 
-  function formatTime(h, m = 0) {
-    const ampm = h >= 12 ? 'PM' : 'AM';
-    const hour12 = h % 12 === 0 ? 12 : h % 12;
-    const minuteStr = m < 10 ? '0' + m : m;
-    return `${hour12}:${minuteStr} ${ampm}`;
+.open-status {
+  margin-top: 15px;
+  max-width: 240px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(255, 182, 193, 0.9); /* light pink */
+  color: #4b2e00;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(255, 182, 193, 0.8);
+  user-select: none;
+  font-size: 1rem;
+  pointer-events: none;
+  filter: drop-shadow(0 0 3px #ff99cc);
+  display: block;
+}
+
+
+.cta-button {
+  background-color: #ff6347;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1rem;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #ff4500;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  color: #FFB6C1; /* LightPink */
+  font-family: 'Fredoka', sans-serif;
+  text-shadow:
+    2px 2px 8px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(255, 100, 50, 0.7);
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.favorites-bg {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  padding: 60px 20px;
+  z-index: 0;
+}
+
+/* Background image with blur and tint */
+.favorites-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px) brightness(0.5);
+  z-index: -2;
+  transition: filter 0.3s ease;
+}
+
+/* Warm sunny tint overlay */
+.favorites-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 200, 50, 0.3);
+  z-index: -1;
+}
+
+/* Keep content above overlays */
+.favorites-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ohana-bg {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  padding: 60px 20px;
+  z-index: 0;
+}
+
+.ohana-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('images/rainbow.png'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  z-index: -2;
+}
+
+.ohana-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2); /* or a warm overlay tint */
+  z-index: -1;
+}
+
+.ohana-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn {
+  background: linear-gradient(to right, #ffe066, #ffae42);
+  color: #4b2e00;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+.btn:hover {
+  background: linear-gradient(to right, #ffd43b, #ffa600);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 173, 51, 0.6);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+/* Sections */
+.section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.section.alt {
+  background-color: #f0f9ff;
+}
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card h3 {
+  padding: 10px;
+}
+
+/* Menu */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.menu-category {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* REMOVE bullets and padding on menu lists */
+.menu-category ul {
+  margin-top: 10px;
+  padding-left: 0;
+  list-style-type: none;
+  font-family: inherit;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Remove bullet points from flavor lists, two columns */
+.flavor-list {
+  columns: 2;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+  margin-bottom: 1rem;
+}
+
+/* About */
+.about-text {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* Menu Section */
+#menu {
+  background-color: #fff5e1; /* Tropical Cream */
+}
+
+/* Gallery Section */
+.section.gallery-section {
+  background: linear-gradient(to bottom, #f0fcff, #48cae4);
+  color: #003845;
+  padding: 60px 20px;
+  min-height: 400px;
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Map */
+.map-container {
+  margin-top: 20px;
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 300px;
+  border: 0;
+  border-radius: 10px;
+}
+
+.collapsible {
+  background: linear-gradient(135deg, #ff9e2c, #ffd15c); /* sunny orange-yellow */
+  color: #fff;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  border: none;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 10px;
+  margin: 1rem 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+button {
+  font-family: 'Fredoka', sans-serif;
+}
+
+.collapsible:hover,
+.collapsible.active {
+  background: linear-gradient(135deg, #ffa836, #ffdf6b); /* brighter on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.flavor-list {
+  columns: 2;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+  margin-bottom: 1rem;
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  background-color: var(--bg, white);
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 0 1.5rem;  /* no vertical padding here */
+}
+.content.expanded {
+  padding: 1rem 1.5rem; /* vertical + horizontal padding on expanded */
+  /* Optional: helps with visual polish */
+  border: 1px solid #eee;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.menu-item {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.menu-item-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+.item-price {
+  font-weight: normal;
+  color: #555;
+}
+.item-desc {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.section-heading {
+  font-family: 'Pacifico', cursive;
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+ul,
+ol,
+.menu-category ul,
+.flavor-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  font-family: 'Segoe UI', sans-serif !important;
+  color: #333 !important;
+  font-size: 1rem !important;
+}
+
+/* Footer */
+.footer {
+  background-color: #e0f7fa;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+
+/* ========== Animations Keyframes ========== */
+
+@keyframes floatUpDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 182, 193, 0.7);
+    transform: scale(1);
   }
-
-  const [openHour, closeHour] = hours[day];
-  const todayHours = `${formatTime(openHour)} - ${formatTime(closeHour)}`;
-
-  const isOpen = (hour > openHour && hour < closeHour) || (hour === openHour && minute >= 0) || (hour === closeHour && minute === 0);
-
-  function getNextOpen() {
-    for (let i = 1; i <= 7; i++) {
-      const nextDay = (day + i) % 7;
-      const nextHours = hours[nextDay];
-      if (nextHours) {
-        const [nextOpenHour] = nextHours;
-        const date = new Date(now);
-        date.setDate(now.getDate() + i);
-        const options = { weekday: 'long' };
-        const dayName = date.toLocaleDateString(undefined, options);
-        return `Opens ${dayName} at ${formatTime(nextOpenHour)}`;
-      }
-    }
-    return '';
+  50% {
+    box-shadow: 0 0 30px rgba(255, 182, 193, 1);
+    transform: scale(1.05);
   }
+}
 
-  if (isOpen) {
-    statusEl.innerHTML = `<strong>We're Open!</strong><br>${todayHours}`;
-    statusEl.style.backgroundColor = 'rgba(255, 182, 193, 0.9)';
-    statusEl.style.color = '#4b2e00';
-  } else {
-    statusEl.innerHTML = `<strong>We're Closed!</strong><br>${getNextOpen()}`;
-    statusEl.style.backgroundColor = 'rgba(200, 200, 200, 0.8)';
-    statusEl.style.color = '#555';
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-})();
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes swing {
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-10deg); }
+  60% { transform: rotate(8deg); }
+  80% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+/* ========== Hero Section Animations ========== */
+
+/* Make hero background slowly pulse in brightness */
+.hero-bg {
+  animation: pulseGlow 6s ease-in-out infinite;
+  filter: brightness(1);
+  transition: filter 0.3s ease;
+}
+
+/* Float hero text gently up/down */
+.hero-content h1, 
+.hero-content p {
+  animation: floatUpDown 6s ease-in-out infinite;
+}
+
+/* Animate hero buttons with shimmer effect on hover */
+.hero-buttons .btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-buttons .btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -150px; bottom: 0;
+  width: 150px;
+  background: linear-gradient(120deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0) 100%);
+  transform: skewX(-20deg);
+  animation: none;
+  z-index: 1;
+  pointer-events: none;
+  transition: none;
+}
+
+.hero-buttons .btn:hover::before {
+  animation: shimmer 1.2s ease forwards;
+  left: 100%;
+}
+
+/* Slight swing animation on favorite cards on hover */
+.card:hover {
+  animation: swing 0.6s ease forwards;
+  transform-origin: bottom center;
+}
+
+/* ========== Collapsible Buttons Animations ========== */
+
+/* Make collapsible buttons pulse on hover */
+.collapsible:hover {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* Animate arrow rotation on active collapsible (assuming you add an arrow span) */
+.collapsible.active::after {
+  content: "▼";
+  display: inline-block;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+  transform: rotate(180deg);
+  color: #fff;
+}
+
+/* ========== Content Fade In ========== */
+
+/* When content expands, fade it in with slight slide up */
+.content.expanded {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* ========== Gallery Images Hover ========== */
+
+/* Slight zoom and shadow on gallery images hover */
+.gallery-grid img:hover {
+  transform: scale(1.07);
+  box-shadow: 0 8px 20px rgba(0, 60, 90, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ========== About Text Animations ========== */
+
+.about-text p {
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: calc(var(--p-index) * 0.3s);
+}
+
+/* Use JS to add --p-index custom properties to paragraphs for staggered fade-in */
+
+/* ========== Footer Glow ========== */
+
+.footer {
+  position: relative;
+  animation: pulseGlow 5s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+/* ========== Buttons - Extra Bounce on Click ========== */
+
+.btn:active,
+.collapsible:active {
+  animation: none;
+  transform: scale(0.95);
+  transition: transform 0.15s ease;
+}
+
+/* ========== Misc Transitions ========== */
+
+button, a.btn, .card, .collapsible {
+  transition: all 0.3s ease;
+}
+
+/* ========== Accessibility: Reduce Motion Preference ========== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
