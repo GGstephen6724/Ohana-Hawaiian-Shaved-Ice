@@ -92,6 +92,33 @@ h1, h2, h3 {
   background-color: #ff4500;
 }
 
+.flavor-list li:nth-child(odd) {
+  background-color: #fff9e5;
+}
+.flavor-list li {
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.flavor-list li {
+  padding-left: 1rem;
+  border-left: 4px solid #ffcf56;
+  margin-bottom: 6px;
+}
+
+.content,
+.menu-item,
+.menu-item p,
+.menu-item li,
+.flavor-list,
+.content ul,
+.content li {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+  color: #333;
+}
+
 .hero-content h1 {
   font-size: 3.5rem;
   font-weight: 900;
@@ -100,9 +127,7 @@ h1, h2, h3 {
   margin-bottom: 15px;
   color: #FFB6C1; /* LightPink */
   font-family: 'Fredoka', sans-serif;
-  text-shadow:
-    2px 2px 8px rgba(0, 0, 0, 0.8),
-    0 0 10px rgba(255, 100, 50, 0.7);
+
 }
 
 .hero-content p {
@@ -165,7 +190,7 @@ h1, h2, h3 {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('images/rainbow.png');
+  background-image: url('images/rainbow.png'); /* Replace with your image path */
   background-size: cover;
   background-position: center;
   opacity: 0.4;
@@ -184,6 +209,8 @@ h1, h2, h3 {
   position: relative;
   z-index: 1;
 }
+
+
 
 .btn {
   background: linear-gradient(to right, #ffe066, #ffae42);
@@ -605,6 +632,45 @@ button, a.btn, .card, .collapsible {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+
+.glow-title {
+  font-size: 4rem !important;
+  font-weight: 900;
+  color: #fff !important;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow:
+    0 0 10px #ff6ec7,
+    0 0 20px #ff6ec7,
+    0 0 30px #ff90d6,
+    0 0 40px #ffa07a,
+    0 0 50px #ffa07a,
+    0 0 60px #ffc4a3;
+  animation: glowPulse 3s ease-in-out infinite alternate;
+  margin-bottom: 1rem;
+}
+
+@keyframes glowPulse {
+  0% {
+    text-shadow:
+      0 0 5px #ff6ec7,
+      0 0 10px #ff6ec7,
+      0 0 15px #ff90d6,
+      0 0 20px #ffa07a,
+      0 0 25px #ffa07a,
+      0 0 30px #ffc4a3;
+  }
+  100% {
+    text-shadow:
+      0 0 20px #ff90d6,
+      0 0 30px #ff90d6,
+      0 0 40px #ffa07a,
+      0 0 50px #ffa07a,
+      0 0 60px #ffc4a3,
+      0 0 70px #ffc4a3;
   }
 }
 
